@@ -16,6 +16,9 @@ import java.util.ArrayList;
  * @author paul
  */
 public class MovieManager {
+    
+    ArrayList<Movie> movies = null;
+    
     public void CreateMovie(Movie movie){
         /*Gateway.addMovie(
                 movie.GetTitle(), 
@@ -26,32 +29,35 @@ public class MovieManager {
     }
     
     public ArrayList<Movie> SearchMoviesWithTitle(String searchString){
-        ArrayList<Movie> movies = null;
         movies = Gateway.getMovieTitle(searchString);
+        SetDataForMovies(movies);
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithDirector(String searchString){
-        ArrayList<Movie> movies = new ArrayList();
-        
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithDate(String searchString){
-        ArrayList<Movie> movies = new ArrayList();
-        
+
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithGenre(String searchString){
-        ArrayList<Movie> movies = new ArrayList();
-        
+
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithActor(String searchString){
-        ArrayList<Movie> movies = new ArrayList();
-        
+
         return movies;
+    }
+    
+    private void SetDataForMovies(ArrayList<Movie> movies){
+        for(Movie movie : movies){
+            movie.SetGenre(Gateway.getGenre(movie.GetId()));
+            movie.SetDirector(Gateway.getDirectorMovie(movie.GetId()));
+            movie.SetActorString(Gateway.getActorMovie(movie.GetId()));
+        }
     }
 }

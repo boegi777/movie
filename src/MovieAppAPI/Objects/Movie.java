@@ -24,6 +24,7 @@ public class Movie {
         this.title = title;
         this.date = date;
         this.genreId = genreId;
+        this.genre = "";
         this.director = "";
         this.actorsString = "";
     }
@@ -36,6 +37,10 @@ public class Movie {
         return this.title;
     }
     
+    public void SetDirector(String director){
+        this.director = director;
+    }
+    
     public String GetDirector(){
         return this.director;
     }
@@ -44,14 +49,23 @@ public class Movie {
         return this.date;
     }
     
+    public void SetGenre(String genre){
+        this.genre = genre;
+    }
+    
     public String GetGenre(){
         return this.genre;
+    }
+    
+    public void SetActorString(String actorString){
+        this.actorsString = actorString;
     }
     
     public String GetActorsString(){
         return this.actorsString;
     }
     
+    @Override
     public String toString(){
         String objString = "";
         objString += this.GetId().toString() + ", ";
