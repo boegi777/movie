@@ -52,21 +52,21 @@ public class Gateway {
         return movieTable.selectMovie(movie);
     }
     
-    public static  ArrayList<String> getMovieYear(String year){
+    public static  ArrayList<Movie> getMovieYear(String year){
         return movieTable.selectMovieYear(year);
     }
     
-    public static  ArrayList<String> getActorMovie(String actor){
+    public static  ArrayList<Movie> getActorMovie(String actor){
         return actorMovieTable.selectActorMovie(actor);
       
     }
     
-    public static ArrayList<String> getDirectorMovie(String director){
+    public static ArrayList<Movie> getDirectorMovie(String director){
         return directorMovieTable.selectDirectorMovie(director);
     }
     
-    public static ArrayList<String> getGenreMovie(int genre_id){
-        return genreTable.selectGenreMovie(genre_id);
+    public static ArrayList<Movie> getGenreMovie(String genre){
+        return genreTable.selectGenreMovie(genre);
     }
     
     public static void addFavouriteMovie(String user,String movie){

@@ -5,6 +5,7 @@
  */
 package MovieData;
 
+import MovieAppAPI.Objects.Movie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,9 +53,9 @@ public class ActorMovieTable {
         }
     }
     
-    public ArrayList<String> selectActorMovie(String actor){
+    public ArrayList<Movie> selectActorMovie(String actor){
         
-        ArrayList<String> movieList = new ArrayList<String>();
+        ArrayList<Movie> movieList = new ArrayList<Movie>();
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
@@ -62,6 +63,7 @@ public class ActorMovieTable {
         ResultSet rs ;
         ResultSet movRs;
         int actor_id = 0;
+        Movie movie;
         
         
          try{
@@ -75,9 +77,10 @@ public class ActorMovieTable {
             
             rs = stm.executeQuery("SELECT movie_id FROM actormovie WHERE actor_id = \""+Integer.toString(actor_id)+"\"");
             while(rs.next()){
-                movRs = stm2.executeQuery("SELECT title FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
+                movRs = stm2.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
                 while(movRs.next()){
-                    movieList.add(movRs.getString(1));
+                    movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                    movieList.add(movie);
                 }
         
             }

@@ -62,24 +62,36 @@ public class MovieTable {
     }
     
     public ArrayList<Movie> selectMovie(String title){
-        //DirectorMovieTable directorMovie = new DirectorMovieTable();
-        //ActorMovieTable actorMovie = new ActorMovieTable();
-        //GenreTable genre = new GenreTable();    
+       
+        String query = "SELECT * FROM movie WHERE title LIKE \"%"+title+"%\"";
+       
+        return executeQuery(query);
+           
+    }
+    
+    public ArrayList<Movie> selectMovieYear(String year){
+        
+      String query = "SELECT * FROM movie WHERE year = \""+year+"\"";
+      
+      return executeQuery(query);
+             
+    }
+        
+      
+    private ArrayList<Movie> executeQuery(String query){
+        
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
-        ResultSet rs = null;
+        ResultSet rs;
         ArrayList<Movie> movieList = new ArrayList<Movie>();
         Movie movie;
-   
         
-        
-        try{
+         try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT * FROM movie WHERE title LIKE \"%"+title+"%\"");
+            rs = stm.executeQuery(query);
             
             while(rs.next()){
-                //movie= new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),genre.selectGenre(rs.getInt(4)),directorMovie.selectDirectorMovie(rs.getInt(1)),actorMovie.selectActorMovie(rs.getInt(1)));
                 movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 movieList.add(movie);
             }
@@ -93,52 +105,8 @@ public class MovieTable {
                 e.printStackTrace();
             }
         }
-        return movieList;     
-    }
-    
-    public ArrayList<String> selectMovieYear(String year){
+        return movieList; 
         
-        ArrayList<String> movieList = new ArrayList<String>();
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        ResultSet rs ;
-       
-        
-        
-         try{
-            stm = con.createStatement();
-            rs = stm.executeQuery("SELECT title FROM movie WHERE year = \""+year+"\"");
-            
-            while(rs.next()){
-                 movieList.add(rs.getString(1));
-            }
-    
-      
-        }catch(SQLException e){
-            e.printStackTrace(); 
-        }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-        
-        return movieList;
-    }
-        
-      
-    
-    public static void main(String[]args){
-        MovieTable table = new MovieTable();
-        String[] list = {"hans","franz","Dieter"};
-        String[] actor = {"hans","franz","riter"};
-        
-        table.insertMovie("Hey", "1999", 1, "Jericho", list);
-        table.insertMovie("H", "1999", 2, "Jericho", actor);
-        table.insertMovie("hu", "1929", 2, "Hans", actor);
     }
     
     
