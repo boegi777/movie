@@ -62,6 +62,9 @@ public class MovieTable {
     }
     
     public ArrayList<Movie> selectMovie(String title){
+        DirectorMovieTable directorMovie = new DirectorMovieTable();
+        ActorMovieTable actorMovie = new ActorMovieTable();
+        GenreTable genre = new GenreTable();    
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
@@ -69,12 +72,14 @@ public class MovieTable {
         ArrayList<Movie> movieList = new ArrayList<Movie>();
         Movie movie;
    
+        
+        
         try{
             stm = con.createStatement();
             rs = stm.executeQuery("SELECT * FROM movie WHERE title LIKE \"%"+title+"%\"");
             
             while(rs.next()){
-                movie= new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+                movie= new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),genre.selectGenre(rs.getInt(4)),directorMovie.selectDirectorMovie(rs.getInt(1)),actorMovie.selectActorMovie(rs.getInt(1)));
                 movieList.add(movie);
             }
         }catch(SQLException e){

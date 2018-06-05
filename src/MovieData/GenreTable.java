@@ -48,6 +48,8 @@ public class GenreTable {
         return selectedGenre;     
     }
     
+    
+    
     public ArrayList<String> selectGenreMovie(int genre_id){
         
         ArrayList<String> movieList = new ArrayList<String>();

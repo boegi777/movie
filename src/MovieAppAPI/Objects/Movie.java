@@ -15,22 +15,16 @@ public class Movie {
     private String title;
     private String director;
     private String date;
-    private Integer genreId;
-    private String[] actors;
-    
-    public Movie(String title, String director, String date, Integer genreId, String[] actors){
-        this.title = title;
-        this.director = director;
-        this.date = date;
-        this.genreId = genreId;
-        this.actors = actors;
-    }
+    private String genre;
+    private String actors;
 
-    public Movie(int id, String title, String date, int genreId) {
+    public Movie(int id, String title, String date, String genre,String director,String actors) {
         this.id = id;
         this.title = title;
         this.date = date;
-        this.genreId = genreId;
+        this.genre = genre;
+        this.director = director;
+        this.actors = actors;
     }
     
     public Integer GetId(){
@@ -49,11 +43,11 @@ public class Movie {
         return this.date;
     }
     
-    public Integer GetGenreId(){
-        return this.genreId;
+    public String GetGenre(){
+        return this.genre;
     }
     
-    public String[] GetActors(){
+    public String GetActors(){
         return this.actors;
     }
     
@@ -63,8 +57,9 @@ public class Movie {
         objString += this.GetTitle() + ", ";
         //objString += this.GetDirector() + ", ";
         objString += this.GetDate() + ", ";
-        objString += this.GetGenreId().toString() + ", ";
-        //objString += this.GetActors().toString() + ", ";
+        objString += this.GetGenre()+", ";
+        objString += this.GetDirector()+", ";
+        objString += this.GetActors();
         
         return objString;
     }

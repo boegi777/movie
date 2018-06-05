@@ -10,31 +10,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
- * @author Mir
+ * @author Juri
  */
-public class DirectorMovieTable {
+public class ActorMovieTable {
     
-      public void insertDirectorMovie(String director,int movie_id){
+    
+    public void insertActorMovie(String actor,int movie_id){
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
         PreparedStatement pst;
         ResultSet rs ;
-        int director_id = 0;
+        int actor_id = 0;
         
         try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT director_id FROM director WHERE director_name = \""+director+"\"");
+            rs = stm.executeQuery("SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\"");
             
             while(rs.next()){
-                director_id = rs.getInt(1);
+                actor_id = rs.getInt(1);
             }
-            pst = con.prepareStatement("INSERT INTO directormovie VALUES(?,?)");
-            pst.setInt(1, director_id);
+            pst = con.prepareStatement("INSERT INTO actormovie VALUES(?,?)");
+            pst.setInt(1, actor_id);
             pst.setInt(2,movie_id);
             pst.execute();
             
@@ -51,7 +52,7 @@ public class DirectorMovieTable {
         }
     }
     
-    public ArrayList<String> selectDirectorMovie(String director){
+    public ArrayList<String> selectActorMovie(String actor){
         
         ArrayList<String> movieList = new ArrayList<String>();
         MovieDatabaseManager mdb = new MovieDatabaseManager();
@@ -60,19 +61,19 @@ public class DirectorMovieTable {
         Statement stm2 = null;
         ResultSet rs ;
         ResultSet movRs;
-        int director_id = 0;
+        int actor_id = 0;
         
         
          try{
             stm = con.createStatement();
             stm2 = con.createStatement(); //Statement for selecting movie title
-            rs = stm.executeQuery("SELECT director_id FROM director WHERE director_name = \""+director+"\"");
+            rs = stm.executeQuery("SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\"");
             
             while(rs.next()){
-                director_id = rs.getInt(1);
+                actor_id = rs.getInt(1);
             }
             
-            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = \""+Integer.toString(director_id)+"\"");
+            rs = stm.executeQuery("SELECT movie_id FROM actormovie WHERE actor_id = \""+Integer.toString(actor_id)+"\"");
             while(rs.next()){
                 movRs = stm2.executeQuery("SELECT title FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
                 while(movRs.next()){
@@ -95,4 +96,44 @@ public class DirectorMovieTable {
         return movieList;
     }
     
+     public String selectActorMovie(int movie_id){
+        
+        MovieDatabaseManager mdb = new MovieDatabaseManager();
+        Connection con = mdb.setConnection();
+        Statement stm = null;
+        Statement stm2 = null;
+        ResultSet rs ;
+        ResultSet actRs;
+        int actor_id = 0;
+        String actors = "";
+        
+         try{
+            stm = con.createStatement();
+            stm2 = con.createStatement(); //Statement for selecting movie title
+            rs = stm.executeQuery("SELECT actor_id FROM actormovie WHERE movie_id = \""+movie_id+"\"");
+            while(rs.next()){
+                actor_id = rs.getInt(1);
+                actRs = stm2.executeQuery("SELECT actor_name FROM actor WHERE actor_id = \""+actor_id+"\"");
+                while(actRs.next()){
+                    actors += actRs.getString(1)+", ";
+                    
+                }
+            }
+        
+      
+        }catch(SQLException e){
+            e.printStackTrace(); 
+        }finally{
+            try{
+                stm.close();
+                con.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        
+        return actors;
+    }
+    
 }
+

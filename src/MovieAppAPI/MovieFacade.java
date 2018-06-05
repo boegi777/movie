@@ -24,9 +24,9 @@ public class MovieFacade {
         this.userManager = new UserManager();
     }
     
-    public void CreateMovie(String title, String director, String date, Integer genre, String[] actors){
-        Movie movie = new Movie(title, director, date, genre, actors);
-        this.movieManager.CreateMovie(movie);
+    public void CreateMovie(String title, String director, String date, Integer genre, String actors){
+        //Movie movie = new Movie(title, director, date, genre, actors);
+        //this.movieManager.CreateMovie(movie);
     }
     
     public ArrayList<Movie> SearchMovies(String searchString, int searchId){

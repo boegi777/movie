@@ -17,12 +17,12 @@ import java.util.ArrayList;
  */
 public class MovieManager {
     public void CreateMovie(Movie movie){
-        Gateway.addMovie(
+        /*Gateway.addMovie(
                 movie.GetTitle(), 
                 movie.GetDate(), 
                 movie.GetGenreId(), 
                 movie.GetDirector(), 
-                movie.GetActors());
+                movie.GetActors());*/
     }
     
     public ArrayList<Movie> SearchMoviesWithTitle(String searchString){
