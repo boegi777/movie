@@ -48,6 +48,10 @@ public class Gateway {
         
     }
     
+    public static ArrayList<Movie> getAllMovies(){
+        return movieTable.selectAllMovies();
+    }
+    
     public static ArrayList<Movie> getMovieTitle(String movie){
         return movieTable.selectMovie(movie);
     }

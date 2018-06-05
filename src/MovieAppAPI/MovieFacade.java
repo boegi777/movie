@@ -29,6 +29,10 @@ public class MovieFacade {
         //this.movieManager.CreateMovie(movie);
     }
     
+    public ArrayList<Movie> GetMovies(){
+        return this.movieManager.GetMovies();
+    }
+    
     public ArrayList<Movie> SearchMovies(String searchString, int searchId){
         ArrayList<Movie> movies = null;
         switch(searchId){

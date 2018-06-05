@@ -5,6 +5,9 @@
  */
 package MovieAppAPI.Objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author paul
@@ -63,6 +66,10 @@ public class Movie {
     
     public String GetActorsString(){
         return this.actorsString;
+    }
+    
+    public String[] GetActorList(){
+        return this.actorsString.split(",");
     }
     
     @Override

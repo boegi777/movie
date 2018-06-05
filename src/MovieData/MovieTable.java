@@ -61,6 +61,11 @@ public class MovieTable {
         }
     }
     
+    public ArrayList<Movie> selectAllMovies(){
+        String query = "Select * From movie";
+        return executeQuery(query);
+    }
+    
     public ArrayList<Movie> selectMovie(String title){
        
         String query = "SELECT * FROM movie WHERE title LIKE \"%"+title+"%\"";

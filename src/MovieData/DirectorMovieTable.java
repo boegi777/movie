@@ -78,7 +78,7 @@ public class DirectorMovieTable {
             while(rs.next()){
                 movRs = stm2.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
                 while(movRs.next()){
-                    movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                    movie = new Movie(movRs.getInt(1), movRs.getString(2), movRs.getString(3), movRs.getInt(4));
                     movieList.add(movie);
                 }
         

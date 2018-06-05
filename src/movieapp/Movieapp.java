@@ -20,10 +20,12 @@ public class Movieapp {
     public static void main(String[] args) {
         MovieFacade facade = new MovieFacade();
         
-        ArrayList<Movie> movies = facade.SearchMovies("Godzilla", 0);
+        //ArrayList<Movie> movies = facade.SearchMovies("Godzilla", 0);
+        ArrayList<Movie> movies = facade.GetMovies();
+       
         
         for(Movie movie : movies){
-            System.out.println(movie.toString() + "\n");
+            //System.out.println(movie.toString() + "\n");
         }
     }
     

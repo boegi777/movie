@@ -28,6 +28,12 @@ public class MovieManager {
                 movie.GetActors());*/
     }
     
+    public ArrayList<Movie> GetMovies(){
+        movies = Gateway.getAllMovies();
+        SetDataForMovies(movies);
+        return movies;
+    }
+    
     public ArrayList<Movie> SearchMoviesWithTitle(String searchString){
         movies = Gateway.getMovieTitle(searchString);
         SetDataForMovies(movies);
@@ -35,21 +41,26 @@ public class MovieManager {
     }
     
     public ArrayList<Movie> SearchMoviesWithDirector(String searchString){
+        movies = Gateway.getDirectorMovie(searchString);
+        SetDataForMovies(movies);
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithDate(String searchString){
-
+        movies = Gateway.getMovieYear(searchString);
+        SetDataForMovies(movies);
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithGenre(String searchString){
-
+        movies = Gateway.getGenreMovie(searchString);
+        SetDataForMovies(movies);
         return movies;
     }
     
     public ArrayList<Movie> SearchMoviesWithActor(String searchString){
-
+        movies = Gateway.getActorMovie(searchString);
+        SetDataForMovies(movies);
         return movies;
     }
     
