@@ -15,16 +15,17 @@ public class Movie {
     private String title;
     private String director;
     private String date;
+    private Integer genreId;
     private String genre;
-    private String actors;
+    private String actorsString;
 
-    public Movie(int id, String title, String date, String genre,String director,String actors) {
+    public Movie(int id, String title, String date, Integer genreId) {
         this.id = id;
         this.title = title;
         this.date = date;
-        this.genre = genre;
-        this.director = director;
-        this.actors = actors;
+        this.genreId = genreId;
+        this.director = "";
+        this.actorsString = "";
     }
     
     public Integer GetId(){
@@ -47,19 +48,18 @@ public class Movie {
         return this.genre;
     }
     
-    public String GetActors(){
-        return this.actors;
+    public String GetActorsString(){
+        return this.actorsString;
     }
     
     public String toString(){
         String objString = "";
         objString += this.GetId().toString() + ", ";
         objString += this.GetTitle() + ", ";
-        //objString += this.GetDirector() + ", ";
         objString += this.GetDate() + ", ";
         objString += this.GetGenre()+", ";
         objString += this.GetDirector()+", ";
-        objString += this.GetActors();
+        objString += this.GetActorsString();
         
         return objString;
     }
