@@ -27,6 +27,18 @@ public class Gateway {
         userTable.insertUser(user,password);   
     }
     
+    public static String getGenre(int movie_id){
+        return genreTable.selectGenre(movie_id);
+    }
+    
+    public static String getDirectorMovie(int movie_id){
+        return directorMovieTable.selectDirectorMovie(movie_id);
+    }
+    
+    public static String getActorMovie(int movie_id){
+        return actorMovieTable.selectActorMovie(movie_id);
+    }
+    
     public static String getUser(String password){
         return userTable.selectUser(password);
     }
