@@ -19,6 +19,29 @@ import java.util.ArrayList;
  */
 public class FavouriteTable {
     
+    
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();
+    private static final Connection con = mdb.setConnection();
+    private static PreparedStatement pst = null;
+    private static Statement stm = null;
+    private static ResultSet rs;
+    
+    
+    
+    
+    
+    public static void close(){
+        try{
+                if(pst != null) pst.close();
+                if(con != null) con.close();
+                if(stm!= null) stm.close();
+                
+            }catch(SQLException e){
+                
+                e.printStackTrace();
+          }
+    }
+    
     public void insertFavouriteMovie(int user_id,int movie_id){
         
         MovieDatabaseManager mdb = new MovieDatabaseManager();
@@ -53,7 +76,7 @@ public class FavouriteTable {
         ArrayList<Movie> movieList = new ArrayList<Movie>();
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
-        Statement stm = null;
+        Statement stm ;
         ResultSet rs ;
         Movie movie;
         
@@ -71,7 +94,6 @@ public class FavouriteTable {
             e.printStackTrace(); 
         }finally{
             try{
-                stm.close();
                 con.close();
             }catch(SQLException e){
                 e.printStackTrace();

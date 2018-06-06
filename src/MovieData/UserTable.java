@@ -37,13 +37,7 @@ public class UserTable {
                 e.printStackTrace();
           }
     }
-        
-    
-        
-    
-        
-  
-    
+       
     public void insertUser(String name,String password){
      
         try{
