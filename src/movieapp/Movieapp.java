@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package movieapp;
+import MovieAppAPI.AuthException;
 import MovieAppAPI.MovieFacade;
 import MovieAppAPI.Objects.Movie;
 import java.util.ArrayList;
@@ -20,13 +21,23 @@ public class Movieapp {
     public static void main(String[] args) {
         MovieFacade facade = new MovieFacade();
         
-        //ArrayList<Movie> movies = facade.SearchMovies("Godzilla", 0);
-        ArrayList<Movie> movies = facade.GetMovies();
-       
+        facade.CreateMovie("Im Westen nichts Neues", "Son Typ", "1945", 2, "Emil, Hermann, Hans, Franz, Dieter");
         
-        for(Movie movie : movies){
-            //System.out.println(movie.toString() + "\n");
-        }
+//        try{
+//            String token = facade.Login("hans", "123");
+//            System.out.println(token);
+//            
+//            ArrayList<Movie> movies = facade.SearchMovies("Heinrich", 1);
+//            
+//            //facade.SetFavourit(1, token);
+//            ArrayList<Movie> favourites = facade.getFavourites(token);
+//            
+//            for(Movie favourit : favourites){
+//                System.out.println(favourit.toString());
+//            }
+//        } catch (AuthException e){
+//            System.out.println(e.getMessage());
+//        }
     }
     
 }

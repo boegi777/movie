@@ -14,19 +14,17 @@ import java.util.ArrayList;
  */
 public class MovieFacade {
     
-    private ActorManager actorManager = null;
     private MovieManager movieManager = null;
     private UserManager userManager = null;
     
     public MovieFacade(){
-        this.actorManager = new ActorManager();
         this.movieManager = new MovieManager();
         this.userManager = new UserManager();
     }
     
     public void CreateMovie(String title, String director, String date, Integer genre, String actors){
-        //Movie movie = new Movie(title, director, date, genre, actors);
-        //this.movieManager.CreateMovie(movie);
+        Movie movie = new Movie(title, date, director, genre, actors);
+        this.movieManager.CreateMovie(movie);
     }
     
     public ArrayList<Movie> GetMovies(){
@@ -56,21 +54,24 @@ public class MovieFacade {
         return movies;
     }
     
-    public ArrayList<Movie> getFavourits(){
-        ArrayList favourits = new ArrayList();
-        return favourits;
+    public ArrayList<Movie> getFavourites(String token) throws AuthException{
+        return this.userManager.GetFavouritesFromUser(token);
     }
     
-    public void SetFavourit (int movieId, int userId){
-        this.userManager.GetUser(userId).setFavourit(movieId);
+    public void SetFavourit (int movieId, String token) throws AuthException{
+        this.userManager.SetFavouritForUser(movieId, token);
     }
     
-    public void Login(String username, String password){
-        this.userManager.AddUser(username, password);
+    public String Login(String username, String password) throws AuthException{
+        return this.userManager.AuthenticateUser(username, password);
     }
     
-    public void Logout(String userToken){
-        this.userManager.RemoveUser(userToken);
+    public void GetAuthenticatedUser(String token) throws AuthException{
+        this.userManager.GetUser(token);
+    }
+    
+    public void Logout(String token){
+        this.userManager.RemoveUser(token);
     }
     
     

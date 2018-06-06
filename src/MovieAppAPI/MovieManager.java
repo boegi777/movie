@@ -20,12 +20,12 @@ public class MovieManager {
     ArrayList<Movie> movies = null;
     
     public void CreateMovie(Movie movie){
-        /*Gateway.addMovie(
+        Gateway.addMovie(
                 movie.GetTitle(), 
                 movie.GetDate(), 
                 movie.GetGenreId(), 
                 movie.GetDirector(), 
-                movie.GetActors());*/
+                movie.GetActorList());
     }
     
     public ArrayList<Movie> GetMovies(){

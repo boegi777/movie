@@ -5,6 +5,9 @@
  */
 package MovieAppAPI.Objects;
 
+import MovieData.Gateway;
+import java.util.ArrayList;
+
 /**
  *
  * @author paul
@@ -14,11 +17,13 @@ public class User {
     private Integer id;
     private String name;
     private String token;
+    private ArrayList<Movie> favourits;
     
     public User(Integer id, String name){
         this.id = id;
         this.name = name;
         this.token = "";
+        this.favourits = null;
     }
     
     public Integer getId(){

@@ -31,6 +31,16 @@ public class Movie {
         this.director = "";
         this.actorsString = "";
     }
+
+    public Movie(String title, String date, String director, Integer genreId, String actorsString) {
+        this.id = -1;
+        this.title = title;
+        this.date = date;
+        this.genreId = genreId;
+        this.genre = "";
+        this.director = director;
+        this.actorsString = actorsString;
+    }
     
     public Integer GetId(){
         return this.id;
@@ -58,6 +68,10 @@ public class Movie {
     
     public String GetGenre(){
         return this.genre;
+    }
+    
+    public Integer GetGenreId(){
+        return this.genreId;
     }
     
     public void SetActorString(String actorString){

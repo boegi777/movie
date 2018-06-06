@@ -23,7 +23,7 @@ public class FavouriteTable {
     private static final MovieDatabaseManager mdb = new MovieDatabaseManager();
     private static final Connection con = mdb.setConnection();
     private static PreparedStatement pst = null;
-    private static Statement stm;
+    private static Statement stm = null;
     private static ResultSet rs;
     
     

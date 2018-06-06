@@ -5,7 +5,9 @@
  */
 package MovieAppAPI;
 
+import MovieAppAPI.Objects.Movie;
 import MovieAppAPI.Objects.User;
+import MovieData.Gateway;
 import java.util.ArrayList;
 
 /**
@@ -18,21 +20,40 @@ public class UserManager {
     public UserManager(){
         users = new ArrayList();
     }
-    public void AddUser(String username, String password){
-        //datenbankabfrage
-        String testToken = "12345";
-        User user = new User(1, "Paul");
+    public String AuthenticateUser(String username, String password) throws AuthException{
+        User user = Gateway.getUser(username, password);
+        if(user == null){
+            throw new AuthException();
+        }
+        user.generateToken();
         users.add(user);
+        return user.getToken();
     }
     public void RemoveUser(String token){
-        
-    }
-    public User GetUser(Integer userId){
         for(User user : users){
-            if(user.getId().equals(userId)){
+            if(user.getToken().equals(token)){
+                users.remove(user);
+            }
+        }
+    }
+
+    public User GetUser(String token) throws AuthException {
+        for(User user : this.users){
+            if(user.getToken().equals(token)){
                 return user;
             }
         }
-        return null;
+        throw new AuthException();
+    }
+    
+    public ArrayList<Movie> GetFavouritesFromUser(String token) throws AuthException{
+        User user = GetUser(token);
+        return Gateway.getFavouriteMovie(user.getId());
+    }
+    
+    public void SetFavouritForUser(Integer movieId, String token) throws AuthException{
+        User user = GetUser(token);
+        Gateway.addFavouriteMovie(user.getId(), movieId);
+        //Gateway.getFavouriteMovie(user.getName())
     }
 }
