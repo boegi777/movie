@@ -28,7 +28,7 @@ public class MovieTable {
         DirectorTable directorTable = new DirectorTable();
         
         try{
-            pst = con.prepareStatement("INSERT INTO movie VALUES(?,?,?)");
+            pst = con.prepareStatement("INSERT INTO movie(title,year,genre_id) VALUES(?,?,?)");
         
             pst.setString(1, title);
             if(year != "") pst.setString(2,year);
