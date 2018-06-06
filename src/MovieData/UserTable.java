@@ -35,7 +35,8 @@ public class UserTable {
             }catch(SQLException e){
                 
                 e.printStackTrace();
-          }  
+          }
+    }
         
     
         
