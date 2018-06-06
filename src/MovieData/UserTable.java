@@ -19,24 +19,15 @@ import java.sql.Statement;
 public class UserTable {
     
     private static int user_id;
-  
+    private static MovieDatabaseManager mdb = new MovieDatabaseManager();
+    private static Connection con = mdb.setConnection();
+    private static PreparedStatement pst = null;
+    private static Statement stm = null;
+    private static ResultSet rs;
     
-    public void insertUser(String name,String password){
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        PreparedStatement pst = null;
-        
+    
+    public static void close(){
         try{
-            pst = con.prepareStatement("INSERT INTO `user` VALUES(?,?,?)");
-            user_id++;
-            pst.setInt(1,user_id);
-            pst.setString(2, name);
-            pst.setString(3, password);
-            pst.execute();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            try{
                 if(pst != null && con != null){
                       pst.close();
                       con.close();
@@ -46,18 +37,43 @@ public class UserTable {
                 e.printStackTrace();
             }  
         }
+    
+        
+    
+        
+  
+    
+    public void insertUser(String name,String password){
+     
+        try{
+            
+            pst = con.prepareStatement("INSERT INTO `user` VALUES(?,?,?)");
+            user_id++;
+            UserTable.pst.setInt(1,user_id);
+            pst.setString(2, name);
+            pst.setString(3, password);
+            pst.execute();
+                    
+        }catch(SQLException e ){
+                
+            e.printStackTrace();
+            
+        }finally{
+            
+            close();
+        }
     }
+                
+
+
     
     public User selectUser(String user,String password){
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        ResultSet rs;
+        
         User selectedUser = null;
         
         try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT * FROM `user` WHERE passsword = \""+password+"\" AND user_name = \""+user+"\"");
+            rs = stm.executeQuery("SELECT * FROM `user` WHERE password = \""+password+"\" AND user_name = \""+user+"\"");
                     
             while(rs.next()){
                  selectedUser = new User(rs.getInt(1),rs.getString(2));
@@ -66,14 +82,7 @@ public class UserTable {
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                 if(stm != null && con != null){
-                      stm.close();
-                      con.close();
-                }
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            close();
         }
         return selectedUser;     
     }
