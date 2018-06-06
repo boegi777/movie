@@ -19,7 +19,6 @@ import MovieAppAPI.Objects.*;
  * @author Juri
  */
 public class MovieTable {
-    private static int movie_id;
     
     public void insertMovie(String title,String year,int genre_id,String director,String[]actor){
         MovieDatabaseManager mdb = new MovieDatabaseManager();
@@ -29,16 +28,14 @@ public class MovieTable {
         DirectorTable directorTable = new DirectorTable();
         
         try{
-            pst = con.prepareStatement("INSERT INTO movie VALUES(?,?,?,?)");
-            movie_id++;
-            
-            pst.setInt(1,movie_id);
-            pst.setString(2, title);
-            if(year != "") pst.setString(3,year);
-            pst.setInt(4, genre_id);
+            pst = con.prepareStatement("INSERT INTO movie VALUES(?,?,?)");
+        
+            pst.setString(1, title);
+            if(year != "") pst.setString(2,year);
+            pst.setInt(3, genre_id);
             pst.execute();
-            if(director != "") directorTable.insertDirector(movie_id,director);
-            if(actor.length != 0) actorTable.insertActor(movie_id,actor);
+            //if(director != "") directorTable.insertDirector(movie_id,director);
+            //if(actor.length != 0) actorTable.insertActor(movie_id,actor);
             
         }catch(SQLException e){
             e.printStackTrace();
