@@ -74,8 +74,8 @@ public class Gateway {
         return genreTable.selectGenreMovie(genre);
     }
     
-    public static void addFavouriteMovie(String user,String movie){
-        favouriteTable.insertFavouriteMovie(user, movie);
+    public static void addFavouriteMovie(int user_id,int movie_id){
+        favouriteTable.insertFavouriteMovie(user_id, movie_id);
         
     }
     

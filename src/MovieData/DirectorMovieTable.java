@@ -74,7 +74,7 @@ public class DirectorMovieTable {
                 director_id = rs.getInt(1);
             }
             
-            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = \""+Integer.toString(director_id)+"\"");
+            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = (SELECT director_id FROM director WHERE director_name = \""+director+"\"");
             while(rs.next()){
                 movRs = stm2.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
                 while(movRs.next()){

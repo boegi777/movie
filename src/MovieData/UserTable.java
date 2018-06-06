@@ -19,8 +19,8 @@ import java.sql.Statement;
 public class UserTable {
     
     private static int user_id;
-    private static MovieDatabaseManager mdb = new MovieDatabaseManager();
-    private static Connection con = mdb.setConnection();
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();
+    private static final Connection con = mdb.setConnection();
     private static PreparedStatement pst = null;
     private static Statement stm = null;
     private static ResultSet rs;
@@ -35,6 +35,7 @@ public class UserTable {
                 }
               
             }catch(SQLException e){
+                
                 e.printStackTrace();
             }  
         }
