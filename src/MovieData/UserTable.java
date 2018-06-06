@@ -28,7 +28,8 @@ public class UserTable {
     
     public static void close(){
         try{
-                if(pst != null && con != null){
+                if(pst != null || con != null || stm != null){
+                      stm.close();
                       pst.close();
                       con.close();
                 }
