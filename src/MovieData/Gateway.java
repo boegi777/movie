@@ -6,6 +6,7 @@
 package MovieData;
 
 import MovieAppAPI.Objects.Movie;
+import MovieAppAPI.Objects.User;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,8 +40,8 @@ public class Gateway {
         return actorMovieTable.selectActorMovie(movie_id);
     }
     
-    public static String getUser(String password){
-        return userTable.selectUser(password);
+    public static User getUser(String user,String password){
+        return userTable.selectUser(user,password);
     }
     
     public static void addMovie(String title,String year,int genre_id,String director,String[]actor){

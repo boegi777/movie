@@ -5,6 +5,7 @@
  */
 package MovieData;
 
+import MovieAppAPI.Objects.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,19 +48,19 @@ public class UserTable {
         }
     }
     
-    public String selectUser(String password){
+    public User selectUser(String user,String password){
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
         ResultSet rs;
-        String selectedUser = "";
+        User selectedUser = null;
         
         try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT `user_name` FROM `user` WHERE passsword = \""+password+"\"");
+            rs = stm.executeQuery("SELECT * FROM `user` WHERE passsword = \""+password+"\" AND user_name = \""+user+"\"");
                     
             while(rs.next()){
-                 selectedUser = rs.getString(1);
+                 selectedUser = new User(rs.getInt(1),rs.getString(2));
             }
            
         }catch(SQLException e){
