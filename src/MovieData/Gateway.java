@@ -79,8 +79,8 @@ public class Gateway {
         
     }
     
-    public static ArrayList<String> getFavouriteMovie(String user){
-        return favouriteTable.selectFavouriteMovie(user);
+    public static ArrayList<Movie> getFavouriteMovie(int user_id){
+        return favouriteTable.selectFavouriteMovie(user_id);
     }
    
 }

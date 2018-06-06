@@ -5,6 +5,7 @@
  */
 package MovieData;
 
+import MovieAppAPI.Objects.Movie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,35 +48,24 @@ public class FavouriteTable {
         }
     }
     
-      public ArrayList<String> selectFavouriteMovie(String user){
+      public ArrayList<Movie> selectFavouriteMovie(int user_id){
         
-        ArrayList<String> movieList = new ArrayList<String>();
+        ArrayList<Movie> movieList = new ArrayList<Movie>();
         MovieDatabaseManager mdb = new MovieDatabaseManager();
         Connection con = mdb.setConnection();
         Statement stm = null;
-        Statement stm2 = null;
         ResultSet rs ;
-        ResultSet movRs;
-        int user_id = 0;
-        
+        Movie movie;
         
          try{
             stm = con.createStatement();
-            stm2 = con.createStatement(); //Statement for selecting movie title
-            rs = stm.executeQuery("SELECT user_id FROM user WHERE user_name = \""+user+"\"");
-            
+            rs = stm.executeQuery("SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\")");
             while(rs.next()){
-                user_id = rs.getInt(1);
-            }
-            
-            rs = stm.executeQuery("SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\"");
-            while(rs.next()){
-                movRs = stm2.executeQuery("SELECT title FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
-                while(movRs.next()){
-                    movieList.add(movRs.getString(1));
+                    movie = new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+                    movieList.add(movie);
                 }
         
-            }
+            
       
         }catch(SQLException e){
             e.printStackTrace(); 

@@ -65,9 +65,6 @@ public class UserTable {
         }
     }
                 
-
-
-    
     public User selectUser(String user,String password){
         
         User selectedUser = null;
