@@ -28,17 +28,15 @@ public class UserTable {
     
     public static void close(){
         try{
-                if(pst != null || con != null || stm != null){
-                      stm.close();
-                      pst.close();
-                      con.close();
-                }
-              
+                if(pst != null) pst.close();
+                if(con != null) con.close();
+                if(stm!= null) stm.close();
+                
             }catch(SQLException e){
                 
                 e.printStackTrace();
-            }  
-        }
+          }  
+        
     
         
     
