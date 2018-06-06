@@ -61,29 +61,22 @@ public class DirectorMovieTable {
         Statement stm2 = null;
         ResultSet rs ;
         ResultSet movRs;
-        int director_id = 0;
+        int movie_id = 0;
         Movie movie;
         
         
          try{
             stm = con.createStatement();
-            stm2 = con.createStatement(); //Statement for selecting movie title
-            rs = stm.executeQuery("SELECT director_id FROM director WHERE director_name = \""+director+"\"");
-            
+            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = (SELECT director_id FROM director WHERE director_name = \""+director+"\")");
             while(rs.next()){
-                director_id = rs.getInt(1);
+                movie_id = rs.getInt(1);
             }
-            
-            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = (SELECT director_id FROM director WHERE director_name = \""+director+"\"");
-            while(rs.next()){
-                movRs = stm2.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
-                while(movRs.next()){
-                    movie = new Movie(movRs.getInt(1), movRs.getString(2), movRs.getString(3), movRs.getInt(4));
+            rs = stm.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(movie_id)+"\"");
+                while(rs.next()){
+                    movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                     movieList.add(movie);
                 }
-        
-            }
-      
+       
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
