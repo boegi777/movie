@@ -13,6 +13,13 @@ public class User {
     
     private Integer id;
     private String name;
+    private String token;
+    
+    public User(Integer id, String name){
+        this.id = id;
+        this.name = name;
+        this.token = "";
+    }
     
     public Integer getId(){
         return id;
@@ -20,6 +27,14 @@ public class User {
     
     public String getName(){
         return name;
+    }
+    
+    public void generateToken(){
+        this.token = "1234" + this.name;
+    }
+    
+    public String getToken(){
+        return token;
     }
     
     public void setFavourit(Integer movieId){

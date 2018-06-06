@@ -66,7 +66,11 @@ public class MovieFacade {
     }
     
     public void Login(String username, String password){
-        this.userManager.LoginUser(username, password);
+        this.userManager.AddUser(username, password);
+    }
+    
+    public void Logout(String userToken){
+        this.userManager.RemoveUser(userToken);
     }
     
     

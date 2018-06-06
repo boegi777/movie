@@ -18,9 +18,14 @@ public class UserManager {
     public UserManager(){
         users = new ArrayList();
     }
-    public void LoginUser(String username, String password){
-        User user = new User();
+    public void AddUser(String username, String password){
+        //datenbankabfrage
+        String testToken = "12345";
+        User user = new User(1, "Paul");
         users.add(user);
+    }
+    public void RemoveUser(String token){
+        
     }
     public User GetUser(Integer userId){
         for(User user : users){
