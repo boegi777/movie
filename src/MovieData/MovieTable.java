@@ -34,20 +34,10 @@ public class MovieTable {
             
             pst.setInt(1,movie_id);
             pst.setString(2, title);
-            
-            if(year != ""){
-                pst.setString(3,year);
-            }else{
-                pst.setString(3,null);
-            }
-            
+            if(year != "") pst.setString(3,year);
             pst.setInt(4, genre_id);
-            
-            
             pst.execute();
-            
             if(director != "") directorTable.insertDirector(movie_id,director);
-            
             if(actor.length != 0) actorTable.insertActor(movie_id,actor);
             
         }catch(SQLException e){

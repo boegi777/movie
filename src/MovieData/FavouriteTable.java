@@ -23,7 +23,7 @@ public class FavouriteTable {
     private static final MovieDatabaseManager mdb = new MovieDatabaseManager();
     private static final Connection con = mdb.setConnection();
     private static PreparedStatement pst = null;
-    private static Statement stm = null;
+    private static Statement stm;
     private static ResultSet rs;
     
     
@@ -34,7 +34,6 @@ public class FavouriteTable {
         try{
                 if(pst != null) pst.close();
                 if(con != null) con.close();
-                if(stm!= null) stm.close();
                 
             }catch(SQLException e){
                 
@@ -43,13 +42,6 @@ public class FavouriteTable {
     }
     
     public void insertFavouriteMovie(int user_id,int movie_id){
-        
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        PreparedStatement pst;
-        ResultSet rs ;
-        
         
         try{
          
@@ -60,46 +52,32 @@ public class FavouriteTable {
             
             
         }catch(SQLException e){
+            
             e.printStackTrace(); 
+            
         }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            close();
         }
     }
     
       public ArrayList<Movie> selectFavouriteMovie(int user_id){
         
         ArrayList<Movie> movieList = new ArrayList<Movie>();
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm ;
-        ResultSet rs ;
         Movie movie;
         
          try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT title FROM movie WHERE movie_id = (SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\")");
+            rs = stm.executeQuery("SELECT * FROM movie WHERE movie_id = (SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\")");
             while(rs.next()){
                     movie = new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
                     movieList.add(movie);
                 }
-        
-            
-      
+       
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+           close();
         }
-        
         return movieList;
     }
       
