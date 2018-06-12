@@ -7,6 +7,7 @@ package MovieData;
 
 import MovieAppAPI.Objects.Movie;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,33 +19,25 @@ import java.util.ArrayList;
  */
 public class GenreTable {
     
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();      
+    private static Connection con = null;   
+    private static Statement stm = null;
+    private static ResultSet rs = null;
+    private static PreparedStatement pst = null;
+    
     public String selectGenre(int genreID){
-        
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        ResultSet rs ;
+        con = mdb.setConnection();
         String selectedGenre="";
-        
          try{
             stm = con.createStatement();
             rs = stm.executeQuery( "SELECT genre_name FROM genre WHERE genre_id ="+Integer.toString(genreID));
-            
             while(rs.next()){
                 selectedGenre = rs.getString(1);
             }
-            
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                if(stm != null && con != null){
-                stm.close();
-                con.close();
-                }
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            mdb.ConnectionClose(con, stm, pst);
         }
         return selectedGenre;     
     }
@@ -52,21 +45,12 @@ public class GenreTable {
     
     
     public ArrayList<Movie> selectGenreMovie(String genre){
-        
         ArrayList<Movie> movieList = new ArrayList<Movie>();
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        ResultSet rs ;
         int genre_id = 0;
-         Movie movie;
-       
-        
-        
+        Movie movie;
          try{
             stm = con.createStatement();
             rs = stm.executeQuery("SELECT genre_id FROM genre WHERE genre_name = \""+genre+"\"");
-            
             while(rs.next()){
                     genre_id = rs.getInt(1);
             }
@@ -75,17 +59,10 @@ public class GenreTable {
                     movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                     movieList.add(movie);
                 }
-     
-      
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            mdb.ConnectionClose(con, stm, pst);
         }
         
         return movieList;

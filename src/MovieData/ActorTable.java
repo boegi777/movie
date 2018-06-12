@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,67 +18,74 @@ import java.sql.Statement;
  */
 public class ActorTable {
     
-    public static int actor_id;
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();      
+    private static PreparedStatement pst = null;
+    private static Connection con = null;   
+    private static Statement stm = null;
+    private static ResultSet rs = null;
+    private static MovieTable movieTable;
+    private static ActorMovieTable actorMovie;
     
-      public void insertActor(int movie_id, String[] actor){
-          
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        PreparedStatement pst;
-        ActorMovieTable actmov= new ActorMovieTable();
-        
+   
+    
+    public void insertActor(String title, String[] actor){
+        movieTable = new MovieTable();
+        actorMovie = new ActorMovieTable();
+        int movie_id = movieTable.getMovieIdByTitle(title);
         try{
-            
-            for(String a : actor){
-                if(selectActor(a)==""){
-                    pst = con.prepareStatement("INSERT INTO actor VALUES(?,?)");
-                    actor_id++;
-                    pst.setInt(1,actor_id);
-                    pst.setString(2, a);
+             con = mdb.setConnection();
+             con.setAutoCommit(false);
+             for(String actName : actor){
+                if(getActorIdByName(actName)== 0){
+                    pst = con.prepareStatement("INSERT INTO actor(actor_name) VALUES(?)");
+                    pst.setString(1, actName);
                     pst.execute();
-                    actmov.insertActorMovie(a, movie_id);
+                    con.commit();
+                    actorMovie.insertActorMovie(actName, movie_id);
                 }else{
-                    actmov.insertActorMovie(a,movie_id);
+                    actorMovie.insertActorMovie(actName,movie_id);
                 }
-            }
-            
+             }     
         }catch(SQLException e){
-            e.printStackTrace();
+           mdb.insertRollBack(con,e);
         }finally{
-            try{
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }  
+            mdb.ConnectionClose(con, stm, pst);
         }
     }
     
-    public String selectActor(String actor){
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        ResultSet rs ;
-        String selectedActor = "";
-        
+    public int getActorIdByName(String actor){
+        int actor_id = 0;
         try{
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT actor_name FROM actor WHERE actor_name = \""+actor+"\"");
-            
+            rs = stm.executeQuery("SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\""); 
             while(rs.next()){
-                selectedActor = rs.getString(1);
-            }
+                actor_id = rs.getInt(1);
+          } 
         }catch(SQLException e){
-            e.printStackTrace(); 
-        }finally{
+            e.printStackTrace();
+        }
+        return actor_id;
+    }
+    
+    public String getActorById(ArrayList<Integer> actor_id_list){
+        String actors = "";
+        for(int actor_id: actor_id_list){
             try{
-                stm.close();
-                con.close();
+                con = mdb.setConnection();
+                stm = con.createStatement();
+                rs = stm.executeQuery("SELECT actor_name FROM actor WHERE actor_id = \""+Integer.toString(actor_id)+"\"");
+                while(rs.next()){
+                    actors += rs.getString(1);
+                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                    e.printStackTrace();
+            }finally{
+                    mdb.ConnectionClose(con, stm, pst);
             }
         }
-        return selectedActor;     
+        return actors;
     }
+    
 }
 
     

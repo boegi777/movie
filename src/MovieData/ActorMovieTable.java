@@ -19,124 +19,73 @@ import java.util.*;
  */
 public class ActorMovieTable {
     
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();      
+    private static PreparedStatement pst = null;
+    private static Connection con = null;   
+    private static Statement stm = null;
+    private static ResultSet rs = null;
+    private static MovieTable movieTable;
+    private static ActorTable actorTable;
+    
     
     public void insertActorMovie(String actor,int movie_id){
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        PreparedStatement pst;
-        ResultSet rs ;
-        int actor_id = 0;
-        
+        movieTable = new MovieTable();
+        actorTable = new ActorTable();
+        int actor_id = actorTable.getActorIdByName(actor) ;
         try{
-            stm = con.createStatement();
-            rs = stm.executeQuery("SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\"");
-            
-            while(rs.next()){
-                actor_id = rs.getInt(1);
-            }
+            con = mdb.setConnection();
             pst = con.prepareStatement("INSERT INTO actormovie VALUES(?,?)");
             pst.setInt(1, actor_id);
             pst.setInt(2,movie_id);
-            pst.execute();
-            
-            
+            pst.execute();  
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            mdb.ConnectionClose(con,stm,pst);
         }
     }
-    
     public ArrayList<Movie> selectActorMovie(String actor){
-        
-        ArrayList<Movie> movieList = new ArrayList<Movie>();
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        Statement stm2 = null;
-        ResultSet rs ;
-        ResultSet movRs;
-        int actor_id = 0;
-        Movie movie;
-        
-        
-         try{
-            stm = con.createStatement();
-            stm2 = con.createStatement(); //Statement for selecting movie title
-            rs = stm.executeQuery("SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\"");
-            
-            while(rs.next()){
-                actor_id = rs.getInt(1);
-            }
-            
-            rs = stm.executeQuery("SELECT movie_id FROM actormovie WHERE actor_id = \""+Integer.toString(actor_id)+"\"");
-            while(rs.next()){
-                movRs = stm2.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(rs.getInt(1))+"\"");
-                while(movRs.next()){
-                    movie = new Movie(movRs.getInt(1), movRs.getString(2), movRs.getString(3), movRs.getInt(4));
-                    movieList.add(movie);
-                }
-        
-            }
-      
-        }catch(SQLException e){
-            e.printStackTrace(); 
-        }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-        
-        return movieList;
+        ArrayList<Integer> movie_id_list = getMovieIdByActor(actor);
+        return movieTable.selectMovieListById(movie_id_list);
     }
     
      public String selectActorMovie(int movie_id){
-        
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        Statement stm2 = null;
-        ResultSet rs ;
-        ResultSet actRs;
-        int actor_id = 0;
-        String actors = "";
-        
-         try{
+        ArrayList<Integer> actor_id_list = getActorIdByMovieId(movie_id);
+        return actorTable.getActorById(actor_id_list);
+    }
+     
+     public ArrayList<Integer> getActorIdByMovieId(int movie_id){
+        ArrayList<Integer> actor_id_list = new ArrayList<>();
+        try{
+            con = mdb.setConnection();
             stm = con.createStatement();
-            stm2 = con.createStatement(); //Statement for selecting movie title
             rs = stm.executeQuery("SELECT actor_id FROM actormovie WHERE movie_id = \""+movie_id+"\"");
             while(rs.next()){
-                actor_id = rs.getInt(1);
-                actRs = stm2.executeQuery("SELECT actor_name FROM actor WHERE actor_id = \""+actor_id+"\"");
-                while(actRs.next()){
-                    actors += actRs.getString(1)+", ";
-                    
-                }
+              actor_id_list.add(rs.getInt(1));
             }
-        
-      
         }catch(SQLException e){
-            e.printStackTrace(); 
+            e.printStackTrace();
         }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            mdb.ConnectionClose(con, stm, pst);
         }
-        
-        return actors;
+        return actor_id_list;
     }
-    
+     
+    public ArrayList<Integer> getMovieIdByActor(String actor){
+         ArrayList<Integer> movie_id_list = new ArrayList<>();
+         try{
+            con = mdb.setConnection();
+            stm = con.createStatement();
+            rs = stm.executeQuery("SELECT movie_id FROM actormovie WHERE actor_id = (SELECT actor_id FROM actor WHERE actor_name = \""+actor+"\")");
+            while(rs.next()){
+                movie_id_list.add(rs.getInt(1));
+            }
+         }catch(SQLException e){
+             e.printStackTrace();
+         }finally{
+                mdb.ConnectionClose(con, stm, pst);
+         }
+         return movie_id_list;
+     }
 }
 

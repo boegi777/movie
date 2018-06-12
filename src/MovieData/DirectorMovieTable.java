@@ -15,121 +15,77 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Mir
+ * @author Juri
  */
 public class DirectorMovieTable {
     
-      public void insertDirectorMovie(String director,int movie_id){
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        PreparedStatement pst;
-        ResultSet rs ;
-        int director_id = 0;
-        
+    private static final MovieDatabaseManager mdb = new MovieDatabaseManager();      
+    private static PreparedStatement pst = null;
+    private static Connection con = null;   
+    private static Statement stm = null;
+    private static ResultSet rs = null;
+    private static DirectorTable directorTable;
+    private static MovieTable movieTable;
+    
+    
+    public void insertDirectorMovie(String director,int movie_id){
+        directorTable = new DirectorTable();
+        movieTable = new MovieTable();
+        int director_id = directorTable.getDirectorIdByName(director);
         try{
-            stm = con.createStatement();
-            rs = stm.executeQuery("SELECT director_id FROM director WHERE director_name = \""+director+"\"");
-            
-            while(rs.next()){
-                director_id = rs.getInt(1);
-            }
+            con = mdb.setConnection();
             pst = con.prepareStatement("INSERT INTO directormovie VALUES(?,?)");
             pst.setInt(1, director_id);
             pst.setInt(2,movie_id);
-            pst.execute();
-            
-            
+            pst.execute(); 
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+            mdb.ConnectionClose(con,stm,pst);
         }
     }
-    
     public ArrayList<Movie> selectDirectorMovie(String director){
-        
-        ArrayList<Movie> movieList = new ArrayList<Movie>();
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        Statement stm2 = null;
-        ResultSet rs ;
-        ResultSet movRs;
-        int movie_id = 0;
-        Movie movie;
-        
-        
-         try{
-            stm = con.createStatement();
-            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = (SELECT director_id FROM director WHERE director_name = \""+director+"\")");
-            while(rs.next()){
-                movie_id = rs.getInt(1);
-            }
-            rs = stm.executeQuery("SELECT * FROM movie WHERE movie_id =\""+Integer.toString(movie_id)+"\"");
-                while(rs.next()){
-                    movie = new Movie(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-                    movieList.add(movie);
-                }
-       
-        }catch(SQLException e){
-            e.printStackTrace(); 
-        }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-        
-        return movieList;
+        ArrayList<Integer> movie_id_list = getMovieIdByDirector(director);
+        return movieTable.selectMovieListById(movie_id_list);
     }
     
      public String selectDirectorMovie(int movie_id){
-        
-        MovieDatabaseManager mdb = new MovieDatabaseManager();
-        Connection con = mdb.setConnection();
-        Statement stm = null;
-        Statement stm2 = null;
-        ResultSet rs ;
-        ResultSet movRs;
-        int director_id = 0;
-        String  director = "";
-        
-        
-         try{
-            stm = con.createStatement();
-            stm2 = con.createStatement(); //Statement for selecting movie title
-            rs = stm.executeQuery("SELECT director_id FROM directormovie WHERE movie_id = \""+movie_id+"\"");
-            
-            while(rs.next()){
-                director_id = rs.getInt(1);
-            }
-            
-            rs = stm.executeQuery("SELECT director_name FROM director WHERE director_id = \""+Integer.toString(director_id)+"\"");
-            while(rs.next()){
-                director = rs.getString(1);
-        
-            }
-      
-        }catch(SQLException e){
-            e.printStackTrace(); 
-        }finally{
-            try{
-                stm.close();
-                con.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-        
-        return director;
+        int director_id = getDirectorIdByMovieId(movie_id);
+        return directorTable.getDirectorById(director_id);
     }
-    
+     
+     public int getDirectorIdByMovieId(int movie_id){
+        int director_id = 0;
+        try{
+            con = mdb.setConnection();
+            stm = con.createStatement();
+            rs = stm.executeQuery("SELECT director_id FROM directormovie WHERE movie_id = \""+movie_id+"\"");
+            while(rs.next()){
+              director_id = rs.getInt(1);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            mdb.ConnectionClose(con,stm,pst);
+        }
+        return director_id;
+    }
+     
+    public ArrayList<Integer> getMovieIdByDirector(String director){
+         ArrayList<Integer> movie_id_list = new ArrayList<Integer>();
+         try{
+            con = mdb.setConnection();
+            stm = con.createStatement();
+            rs = stm.executeQuery("SELECT movie_id FROM directormovie WHERE director_id = (SELECT director_id FROM director WHERE director_name = \""+director+"\")");
+            while(rs.next()){
+                movie_id_list.add(rs.getInt(1));
+            }
+         }catch(SQLException e){
+             e.printStackTrace();
+         }finally{
+             mdb.ConnectionClose(con,stm,pst);
+         }
+         return movie_id_list;
+     }
+     
 }

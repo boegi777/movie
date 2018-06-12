@@ -21,6 +21,7 @@ public class Movieapp {
     public static void main(String[] args) {
         MovieFacade facade = new MovieFacade();
         
+        facade.CreateMovie("Im WestNeues", "Son", "1945", 2, "Emil, Hermann, Hans, Franz, Dieter");
         facade.CreateMovie("Im Westen nichts Neues", "Son Typ", "1945", 2, "Emil, Hermann, Hans, Franz, Dieter");
         
 //        try{

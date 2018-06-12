@@ -24,12 +24,11 @@ public class Gateway {
      
     
     public static void addUser(String user,String password){
-       
         userTable.insertUser(user,password);   
     }
     
-    public static String getGenre(int movie_id){
-        return genreTable.selectGenre(movie_id);
+    public static String getGenre(int genre_id){
+        return genreTable.selectGenre(genre_id);
     }
     
     public static String getDirectorMovie(int movie_id){

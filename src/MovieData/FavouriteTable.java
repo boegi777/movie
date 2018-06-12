@@ -21,65 +21,45 @@ public class FavouriteTable {
     
     
     private static final MovieDatabaseManager mdb = new MovieDatabaseManager();
-    private static final Connection con = mdb.setConnection();
+    private static Connection con = null;
     private static PreparedStatement pst = null;
     private static Statement stm = null;
-    private static ResultSet rs;
-    
-    
-    
-    
-    
-    public static void close(){
-        try{
-                if(pst != null) pst.close();
-                if(con != null) con.close();
-                
-            }catch(SQLException e){
-                
-                e.printStackTrace();
-          }
-    }
+    private static ResultSet rs = null;
     
     public void insertFavouriteMovie(int user_id,int movie_id){
         
         try{
-         
+            con = mdb.setConnection();
+            con.setAutoCommit(false);
             pst = con.prepareStatement("INSERT INTO favourite VALUES(?,?)");
             pst.setInt(1, user_id);
             pst.setInt(2,movie_id);
             pst.execute();
-            
-            
+            con.commit();
         }catch(SQLException e){
-            
-            e.printStackTrace(); 
-            
+            mdb.insertRollBack(con,e);
         }finally{
-            close();
+            mdb.ConnectionClose(con,stm,pst);
         }
     }
     
       public ArrayList<Movie> selectFavouriteMovie(int user_id){
-        
         ArrayList<Movie> movieList = new ArrayList<Movie>();
         Movie movie;
-        
-         try{
+        try{
+            con = mdb.setConnection();
             stm = con.createStatement();
             rs = stm.executeQuery("SELECT * FROM movie WHERE movie_id = (SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\")");
             while(rs.next()){
                     movie = new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
                     movieList.add(movie);
                 }
-       
         }catch(SQLException e){
             e.printStackTrace(); 
         }finally{
-           close();
+           mdb.ConnectionClose(con,stm,pst);
         }
         return movieList;
-    }
-      
-  }
+    } 
+}
 
