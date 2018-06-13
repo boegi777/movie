@@ -21,7 +21,7 @@
                     <f:ajax event="change" execute="filterAttribute filterValue2 filterValue" render="@form" />
                 </h:selectOneMenu>
                 <br/>
-                    <h:inputText id="filterValue" rendered="#{ManagedBean.filterAttribute != 3}" value="#{ManagedBean.filterValue}"/>
+                    <h:inputText id="filterValue" value="#{ManagedBean.filterValue}"/>
                     <h:selectOneMenu id="fiterValue2" rendered="#{ManagedBean.filterAttribute == 3}" value="#{ManagedBean.filterValue}">
                         <f:selectItem />
                         <f:selectItem itemValue="1" itemLabel="Horror" />
