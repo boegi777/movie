@@ -1,0 +1,2 @@
+<f:setPropertyActionListener target="#{ManagedBean.favorite}" value="#{films.id}" />
+<f:ajax event="click" execute="@this" render="meineFilmID" />

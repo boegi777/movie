@@ -8,6 +8,7 @@ package MovieData;
 import MovieAppAPI.Objects.Movie;
 import MovieAppAPI.Objects.User;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,7 @@ public class Gateway {
         userTable.insertUser(user,password);   
     }
     
-    public static String getGenre(int genre_id){
+    public static String getGenre(int genre_id) throws SQLException{
         return genreTable.selectGenre(genre_id);
     }
     
@@ -43,7 +44,7 @@ public class Gateway {
         return userTable.selectUser(user,password);
     }
     
-    public static void addMovie(String title,String year,int genre_id,String director,String[]actor){
+    public static void addMovie(String title,String year,String director,int genre_id,String[]actor){
         movieTable.insertMovie(title,year,genre_id,director,actor);
         
     }

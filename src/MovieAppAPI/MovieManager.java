@@ -23,48 +23,48 @@ public class MovieManager {
         Gateway.addMovie(
                 movie.GetTitle(), 
                 movie.GetDate(), 
-                movie.GetGenreId(), 
-                movie.GetDirector(), 
+                movie.GetDirector(),  
+                movie.GetGenreId(),
                 movie.GetActorList());
     }
     
-    public ArrayList<Movie> GetMovies(){
+    public ArrayList<Movie> GetMovies() throws SQLException{
         movies = Gateway.getAllMovies();
         SetDataForMovies(movies);
         return movies;
     }
     
-    public ArrayList<Movie> SearchMoviesWithTitle(String searchString){
+    public ArrayList<Movie> SearchMoviesWithTitle(String searchString) throws SQLException{
         movies = Gateway.getMovieTitle(searchString);
         SetDataForMovies(movies);
         return movies;
     }
     
-    public ArrayList<Movie> SearchMoviesWithDirector(String searchString){
+    public ArrayList<Movie> SearchMoviesWithDirector(String searchString) throws SQLException{
         movies = Gateway.getDirectorMovie(searchString);
         SetDataForMovies(movies);
         return movies;
     }
     
-    public ArrayList<Movie> SearchMoviesWithDate(String searchString){
+    public ArrayList<Movie> SearchMoviesWithDate(String searchString) throws SQLException{
         movies = Gateway.getMovieYear(searchString);
         SetDataForMovies(movies);
         return movies;
     }
     
-    public ArrayList<Movie> SearchMoviesWithGenre(String searchString){
+    public ArrayList<Movie> SearchMoviesWithGenre(String searchString) throws SQLException{
         movies = Gateway.getGenreMovie(searchString);
         SetDataForMovies(movies);
         return movies;
     }
     
-    public ArrayList<Movie> SearchMoviesWithActor(String searchString){
+    public ArrayList<Movie> SearchMoviesWithActor(String searchString) throws SQLException{
         movies = Gateway.getActorMovie(searchString);
         SetDataForMovies(movies);
         return movies;
     }
     
-    private void SetDataForMovies(ArrayList<Movie> movies){
+    private void SetDataForMovies(ArrayList<Movie> movies) throws SQLException{
         for(Movie movie : movies){
             movie.SetGenre(Gateway.getGenre(movie.GetId()));
             movie.SetDirector(Gateway.getDirectorMovie(movie.GetId()));

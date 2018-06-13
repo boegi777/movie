@@ -25,12 +25,12 @@ public class GenreTable {
     private static ResultSet rs = null;
     private static PreparedStatement pst = null;
     
-    public String selectGenre(int genreID){
+    public String selectGenre(int genreID) throws SQLException{
         con = mdb.setConnection();
         String selectedGenre="";
          try{
             stm = con.createStatement();
-            rs = stm.executeQuery( "SELECT genre_name FROM genre WHERE genre_id ="+Integer.toString(genreID));
+            rs = stm.executeQuery( "SELECT genre_name FROM genre WHERE genre_id =\""+Integer.toString(genreID)+"\"");
             while(rs.next()){
                 selectedGenre = rs.getString(1);
             }
@@ -65,6 +65,7 @@ public class GenreTable {
             mdb.ConnectionClose(con, stm, pst);
         }
         
+        System.out.println("Genre Table -vorher- genre: "+genre);
         return movieList;
     }
         

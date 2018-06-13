@@ -14,9 +14,9 @@ import java.sql.*;
  */
 public class MovieDatabaseManager {
         private String test = "test";
-        private String url = "jdbc:mysql://localhost:3306/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        private String url = "jdbc:mysql://localhost:8889/movie?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         private String user = "root";
-        private String password = "";
+        private String password = "root";
         public static Connection con;
     
     MovieDatabaseManager(){
@@ -27,15 +27,9 @@ public class MovieDatabaseManager {
         }
     }
     
-    public Connection setConnection(){
-            try {
+    public Connection setConnection() throws SQLException{
                 con = DriverManager.getConnection(this.url, this.user, this.password);
                 return con;
-            } catch(SQLException ex){
-              
-                System.out.println(ex.getMessage());
-                return null;
-         }
         }
       public void insertRollBack(Connection con,SQLException ex){
          try{

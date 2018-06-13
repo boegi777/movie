@@ -25,12 +25,10 @@ public class MovieTable {
     private static Connection con = null;   
     private static Statement stm = null;
     private static ResultSet rs = null;
-    private static ActorTable actorTable ;
-    private static DirectorTable directorTable ;
+    private static ActorTable actorTable = new ActorTable();
+    private static DirectorTable directorTable = new DirectorTable();
  
     public void insertMovie(String title,String year,int genre_id,String director,String[]actor){
-        actorTable = new ActorTable();
-        directorTable = new DirectorTable();
         try{
             con = mdb.setConnection();
             con.setAutoCommit(false);

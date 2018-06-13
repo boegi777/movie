@@ -33,6 +33,7 @@ public class UserManager {
         for(User user : users){
             if(user.getToken().equals(token)){
                 users.remove(user);
+                break;
             }
         }
     }

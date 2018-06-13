@@ -23,14 +23,12 @@ public class ActorTable {
     private static Connection con = null;   
     private static Statement stm = null;
     private static ResultSet rs = null;
-    private static MovieTable movieTable;
-    private static ActorMovieTable actorMovie;
+    private static MovieTable movieTable = new MovieTable();
+    private static ActorMovieTable actorMovie = new ActorMovieTable();
     
    
     
     public void insertActor(String title, String[] actor){
-        movieTable = new MovieTable();
-        actorMovie = new ActorMovieTable();
         int movie_id = movieTable.getMovieIdByTitle(title);
         try{
              con = mdb.setConnection();

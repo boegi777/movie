@@ -6,6 +6,7 @@
 package MovieAppAPI;
 
 import MovieAppAPI.Objects.Movie;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,11 +28,11 @@ public class MovieFacade {
         this.movieManager.CreateMovie(movie);
     }
     
-    public ArrayList<Movie> GetMovies(){
+    public ArrayList<Movie> GetMovies() throws SQLException{
         return this.movieManager.GetMovies();
     }
     
-    public ArrayList<Movie> SearchMovies(String searchString, int searchId){
+    public ArrayList<Movie> SearchMovies(String searchString, int searchId) throws SQLException{
         ArrayList<Movie> movies = null;
         switch(searchId){
             case 0:
