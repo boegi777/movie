@@ -30,7 +30,7 @@ public class GenreTable {
         String selectedGenre="";
          try{
             stm = con.createStatement();
-            rs = stm.executeQuery( "SELECT genre_name FROM genre WHERE genre_id =\""+Integer.toString(genreID)+"\"");
+            rs = stm.executeQuery( "SELECT genre_name FROM genre WHERE genre_id ="+Integer.toString(genreID));
             while(rs.next()){
                 selectedGenre = rs.getString(1);
             }

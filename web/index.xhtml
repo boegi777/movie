@@ -31,7 +31,7 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <h:commandLink  value="Alle Filme" class="nav-link" action="#{ManagedBean.showAllMoviesUI()}">
-                            <f:ajax render = "filmeTabelle" />
+<!--                            <f:ajax render = "filmeTabelle" />-->
                         </h:commandLink>
                     </li>
                 </ul>
@@ -78,6 +78,7 @@
                             <h:outputText value="Hallo #{ManagedBean.name}" id="nameAusgabe"/>
                             <br />
                             <h:commandButton  class="btn btn-primary" value="abmelden" immediate="true" action="#{ManagedBean.logOutUI()}">
+                                <f:actionListener binding="#{ManagedBean.setIfLoggedIn(false)}" />
                             </h:commandButton>
                             <!-- Log-In Test-Ausgabe -->
                         </h:form>

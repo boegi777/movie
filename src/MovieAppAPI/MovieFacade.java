@@ -55,7 +55,7 @@ public class MovieFacade {
         return movies;
     }
     
-    public ArrayList<Movie> getFavourites(String token) throws AuthException{
+    public ArrayList<Movie> getFavourites(String token) throws AuthException, SQLException{
         return this.userManager.GetFavouritesFromUser(token);
     }
     

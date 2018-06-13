@@ -8,6 +8,7 @@ package MovieAppAPI;
 import MovieAppAPI.Objects.Movie;
 import MovieAppAPI.Objects.User;
 import MovieData.Gateway;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,7 @@ import java.util.ArrayList;
  */
 public class UserManager {
     ArrayList<User> users = null;
+    
     
     public UserManager(){
         users = new ArrayList();
@@ -47,9 +49,11 @@ public class UserManager {
         throw new AuthException();
     }
     
-    public ArrayList<Movie> GetFavouritesFromUser(String token) throws AuthException{
+    public ArrayList<Movie> GetFavouritesFromUser(String token) throws AuthException, SQLException{
         User user = GetUser(token);
-        return Gateway.getFavouriteMovie(user.getId());
+        ArrayList<Movie> favourites = Gateway.getFavouriteMovie(user.getId());
+        MovieManager.SetDataForMovies(favourites);
+        return favourites;
     }
     
     public void SetFavouritForUser(Integer movieId, String token) throws AuthException{

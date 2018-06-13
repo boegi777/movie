@@ -177,7 +177,7 @@ public class NewJSFManagedBean implements Serializable{
     }
     //Neuen Film anlegen
     public void createMovieUI(){
-        if(!title.equals("") & !date.equals("") & !genre.equals("") & !director.equals("") & !actor.equals("")){
+        if(!title.equals("") & !genre.equals("")){
             fassade.CreateMovie(title, director, date, Integer.parseInt(genre), actor);
             //String[] newMovieArray = {title, date, genre, director, actor}; 
             System.out.println( "Fassade (createMovieUI) --> ");
@@ -187,7 +187,7 @@ public class NewJSFManagedBean implements Serializable{
     public void showFavoriteMoviesUI(){
         try {
             setFilmList(fassade.getFavourites(token));
-        } catch (AuthException ex) {
+        } catch (AuthException | SQLException ex) {
             Logger.getLogger(NewJSFManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         //setFilmList(TestBackground.getListOfFavorite());

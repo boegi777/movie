@@ -64,9 +64,9 @@ public class MovieManager {
         return movies;
     }
     
-    private void SetDataForMovies(ArrayList<Movie> movies) throws SQLException{
+    public static void SetDataForMovies(ArrayList<Movie> movies) throws SQLException{
         for(Movie movie : movies){
-            movie.SetGenre(Gateway.getGenre(movie.GetId()));
+            movie.SetGenre(Gateway.getGenre(movie.GetGenreId()));
             movie.SetDirector(Gateway.getDirectorMovie(movie.GetId()));
             movie.SetActorString(Gateway.getActorMovie(movie.GetId()));
         }

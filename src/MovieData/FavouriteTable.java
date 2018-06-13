@@ -49,8 +49,10 @@ public class FavouriteTable {
         try{
             con = mdb.setConnection();
             stm = con.createStatement();
-            rs = stm.executeQuery("SELECT * FROM movie WHERE movie_id = (SELECT movie_id FROM favourite WHERE user_id = \""+Integer.toString(user_id)+"\")");
+            String query = "";
+            rs = stm.executeQuery("SELECT * FROM movie JOIN favourite ON movie.movie_id = favourite.movie_id WHERE favourite.user_id = "+Integer.toString(user_id));
             while(rs.next()){
+                    
                     movie = new Movie(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
                     movieList.add(movie);
                 }
