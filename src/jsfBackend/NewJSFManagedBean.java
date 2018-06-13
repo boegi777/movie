@@ -198,15 +198,15 @@ public class NewJSFManagedBean implements Serializable{
         
         //this.favorite = favoriteUI;
         //System.out.println("Fassade (showFavoriteMoviesUI): "+TestBackground.saveFavorite(favorite));
-        if(favorite!=null){
+        //if(favoriteUI!=null){
             try {
                 fassade.SetFavourit(Integer.parseInt(favoriteUI), token);
             } catch (AuthException ex) {
-                Logger.getLogger(NewJSFManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(NewJSFManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             TestBackground.saveFavorite(favorite);
             System.out.println("Fassade (saveFavoriteUI):  "+favorite);
-        }
+        //}
     }
     
     /*
