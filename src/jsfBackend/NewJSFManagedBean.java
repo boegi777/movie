@@ -40,6 +40,7 @@ public class NewJSFManagedBean implements Serializable{
     private String genre;
     private String director;
     private String actor;
+    private String valAusgabe;
     private boolean ifLoggedIn = false;
     
     /*
@@ -51,6 +52,12 @@ public class NewJSFManagedBean implements Serializable{
     public void setIfLoggedIn(boolean ifLoggedIn){
         this.ifLoggedIn = ifLoggedIn;
     }
+    public String getValAusgabe(){
+        return valAusgabe;
+    }
+    public void setValAusgabe(String valAusgabe){
+        this.valAusgabe = valAusgabe;
+    }
     public String getTitle(){
         return title;
     }
@@ -61,7 +68,12 @@ public class NewJSFManagedBean implements Serializable{
         return date;
     }
     public void setDate(String date){
-        this.date = date;
+        if(Integer.parseInt(date)<1920&Integer.parseInt(date)>2017){
+            this.date = date;
+            this.valAusgabe = "";
+        }else{
+            this.valAusgabe = "Bitte ein Jahr zwischen 1920 und 2017 wählen";
+        }
     }
     public String getGenre(){
         return genre;
