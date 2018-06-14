@@ -7,7 +7,6 @@ import MovieAppAPI.AuthException;
 import MovieAppAPI.MovieFacade;
 import MovieAppAPI.Objects.Movie;
 import TestFassade.TestBackground;
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.*;
 import javax.inject.Named;
 
@@ -213,14 +210,14 @@ public class NewJSFManagedBean implements Serializable{
     *   Hilfs-Methoden
     */
     
-    public Films[] arrayToFilmObject(String[][] filmListTest){
-        System.out.println("Logik (arrayToFilmObject(--->)):  "+filmListTest);
-        Films[] Liste= new Films[filmListTest.length];
-        for(int i=0; i<filmListTest.length; i++){
-            Liste[i] = new Films(filmListTest[i][0],filmListTest[i][1],filmListTest[i][2],filmListTest[i][3],filmListTest[i][4],filmListTest[i][5]);
-        }
-        return Liste;
-    }
+//    public Films[] arrayToFilmObject(String[][] filmListTest){
+//        System.out.println("Logik (arrayToFilmObject(--->)):  "+filmListTest);
+//        Films[] Liste= new Films[filmListTest.length];
+//        for(int i=0; i<filmListTest.length; i++){
+//            Liste[i] = new Films(filmListTest[i][0],filmListTest[i][1],filmListTest[i][2],filmListTest[i][3],filmListTest[i][4],filmListTest[i][5]);
+//        }
+//        return Liste;
+//    }
     public String[] stringsToArray(String title,String date,String genre,String director,String actor){
         String[] myArray = {title, date, genre, director, actor}; 
         return myArray;
