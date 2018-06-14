@@ -8,7 +8,6 @@ package MovieData;
 import java.sql.*;
 
 /**
- *hure
  * 
  * @author Juri
  */
