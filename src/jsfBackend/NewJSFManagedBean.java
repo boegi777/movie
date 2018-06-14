@@ -68,7 +68,7 @@ public class NewJSFManagedBean implements Serializable{
         return date;
     }
     public void setDate(String date){
-        if(Integer.parseInt(date)<1920&Integer.parseInt(date)>2017){
+        if((Integer.parseInt(date)<1920) & (Integer.parseInt(date)>2017)){
             this.date = date;
             this.valAusgabe = "";
         }else{

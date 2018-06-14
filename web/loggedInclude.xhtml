@@ -32,16 +32,15 @@
                     <f:ajax event="change" execute="filterAttribute filterValue2 filterValue" render="@form" />
                     </h:selectOneMenu>
                 <h:commandButton class="btn btn-primary" value="filtern" action="#{ManagedBean.showMoviesUI()}">
-                    <f:ajax execute="filterValue filterValue2 filterAttribute" render="@form" />
+                    <f:ajax execute="filterValue filterValue2 filterAttribute" render="@form validierungAusgabe" />
                 </h:commandButton>
-                <h:outputText value="#{ManagedBean.filterValue}" id="meinText"/>
+                <h:outputText value="#{ManagedBean.valAusgabe}" id="validierungAusgabe"/>
                 <h:commandButton class="btn btn-primary float-right" value="FAVOURITES" action="#{ManagedBean.showFavoriteMoviesUI()}">
-                    <f:ajax render = "filmeTabelle" />
+                    <f:ajax render = "filmeTabelle validierungAusgabe" />
                 </h:commandButton>
 
                 <!-- Table -->
 
-                <h:outputText value="#{ManagedBean.valAusgabe}" id="validierungAusgabe"/>
 
                 <h:dataTable value="#{ManagedBean.filmList}" id="filmeTabelle" var="films"
                         styleClass="table table-bordered table-striped"
