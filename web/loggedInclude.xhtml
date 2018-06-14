@@ -10,6 +10,7 @@
                 <br/>
                 <span class="text-muted display-4">Filme Suchen:</span>
                 <br/>
+                
                 <!-- Radio Button -->
                 <h:selectOneMenu id="fiterAttribute" value="#{ManagedBean.filterAttribute}">
                     <f:selectItem />
@@ -21,22 +22,26 @@
                     <f:ajax event="change" execute="filterAttribute filterValue2 filterValue" render="@form" />
                 </h:selectOneMenu>
                 <br/>
-                    <h:inputText id="filterValue" value="#{ManagedBean.filterValue}"/>
-                    <h:selectOneMenu id="fiterValue2" rendered="#{ManagedBean.filterAttribute == 3}" value="#{ManagedBean.filterValue}">
-                        <f:selectItem />
-                        <f:selectItem itemValue="1" itemLabel="Horror" />
-                        <f:selectItem itemValue="2" itemLabel="Komödie" />
-                        <f:selectItem itemValue="3" itemLabel="Action" />  <!-- 1=Horror, 2=Komödie, 3=Action, 4=Drama, 5=SciFi -->
-                        <f:selectItem itemValue="4" itemLabel="Drama" />
-                        <f:selectItem itemValue="5" itemLabel="SciFi" />
-                    <f:ajax event="change" execute="filterAttribute filterValue2 filterValue" render="@form" />
-                    </h:selectOneMenu>
+                
+                <h:inputText id="filterValue" value="#{ManagedBean.filterValue}"/>
+                <h:selectOneMenu id="fiterValue2" rendered="#{ManagedBean.filterAttribute == 3}" value="#{ManagedBean.filterValue}">
+                    <f:selectItem />
+                    <f:selectItem itemValue="1" itemLabel="Horror" />
+                    <f:selectItem itemValue="2" itemLabel="Komödie" />
+                    <f:selectItem itemValue="3" itemLabel="Action" />  <!-- 1=Horror, 2=Komödie, 3=Action, 4=Drama, 5=SciFi -->
+                    <f:selectItem itemValue="4" itemLabel="Drama" />
+                    <f:selectItem itemValue="5" itemLabel="SciFi" />
+                <f:ajax event="change" execute="filterAttribute filterValue2 filterValue" render="@form" />
+                </h:selectOneMenu>
+                
                 <h:commandButton class="btn btn-primary" value="filtern" action="#{ManagedBean.showMoviesUI()}">
-                    <f:ajax execute="filterValue filterValue2 filterAttribute" render="@form validierungAusgabe" />
+                    <f:ajax execute="filterValue filterValue2 filterAttribute" render="@form" />
                 </h:commandButton>
                 <h:outputText value="#{ManagedBean.valAusgabe}" id="validierungAusgabe"/>
+                
+                
                 <h:commandButton class="btn btn-primary float-right" value="FAVOURITES" action="#{ManagedBean.showFavoriteMoviesUI()}">
-                    <f:ajax render = "filmeTabelle validierungAusgabe" />
+                    <f:ajax render = "filmeTabelle" />
                 </h:commandButton>
 
                 <!-- Table -->
