@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MovieAppAPI;
 
 import MovieAppAPI.Objects.Movie;
@@ -59,6 +54,5 @@ public class UserManager {
     public void SetFavouritForUser(Integer movieId, String token) throws AuthException{
         User user = GetUser(token);
         Gateway.addFavouriteMovie(user.getId(), movieId);
-        //Gateway.getFavouriteMovie(user.getName())
     }
 }

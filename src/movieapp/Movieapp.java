@@ -32,7 +32,7 @@ public class Movieapp {
             ArrayList<Movie> movies = facade.SearchMovies("Heinrich", 1);
             
             //facade.SetFavourit(1, token);
-            ArrayList<Movie> favourites = facade.getFavourites(token);
+            ArrayList<Movie> favourites = facade.GetFavourites(token);
             
             for(Movie favourit : favourites){
                 System.out.println(favourit.toString());

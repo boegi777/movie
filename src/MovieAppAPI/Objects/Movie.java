@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MovieAppAPI.Objects;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -89,12 +81,13 @@ public class Movie {
     @Override
     public String toString(){
         String objString = "";
-        objString += this.GetId().toString() + ", ";
-        objString += this.GetTitle() + ", ";
-        objString += this.GetDate() + ", ";
-        objString += this.GetGenre()+", ";
-        objString += this.GetDirector()+", ";
-        objString += this.GetActorsString();
+        objString += "ID: " + this.GetId().toString() + ", ";
+        objString += "Title: " + this.GetTitle() + ", ";
+        objString += "Date: " + this.GetDate() + ", ";
+        objString += "Genre ID: " + this.GetGenreId() + ", ";
+        objString += "Genre: " + this.GetGenre()+", ";
+        objString += "Director: " + this.GetDirector()+", ";
+        objString += "Actors: " + this.GetActorsString();
         
         return objString;
     }

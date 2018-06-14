@@ -186,7 +186,7 @@ public class NewJSFManagedBean implements Serializable{
     //Favoritenliste abrufen
     public void showFavoriteMoviesUI(){
         try {
-            setFilmList(fassade.getFavourites(token));
+            setFilmList(fassade.GetFavourites(token));
         } catch (AuthException | SQLException ex) {
             Logger.getLogger(NewJSFManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
